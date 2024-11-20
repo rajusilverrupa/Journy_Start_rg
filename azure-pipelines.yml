@@ -1,0 +1,33 @@
+name: rajupipeline
+trigger: none
+pool: default
+stages:
+- stage: initStage
+  displayName: "init wala stage"
+  jobs:
+  - job: initjob
+    steps:
+    - task: TerraformInstaller@1
+      inputs:
+        terraformVersion: 'latest' 
+    - task: TerraformTaskV4@4
+      inputs:
+        provider: 'azurerm'
+        command: 'init'
+        backendServiceArm: 'rajuservicewala'
+        backendAzureRmResourceGroupName: 'pipeline-rg'
+        backendAzureRmStorageAccountName: 'pipeline097577'
+        backendAzureRmContainerName: 'pipelinecon'
+        backendAzureRmKey: 'raju.terraform.tfstate'
+    - task: TerraformTaskV4@4
+      inputs:
+        provider: 'azurerm'
+        command: 'plan'
+        environmentServiceNameAzureRM: 'rajuservicewala'
+    - task: TerraformTaskV4@4
+      inputs:
+        provider: 'azurerm'
+        command: 'apply'
+        commandOptions: '-auto-approve'
+        environmentServiceNameAzureRM: 'rajuservicewala'
+        

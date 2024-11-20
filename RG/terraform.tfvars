@@ -1,11 +1,11 @@
 raju = {
   rg1={
-    name=raju
+    name_rg=raju
     location=westus
   }
 
 rg2={
-    name=raju01
+    name_rg=raju01
     location=westus
   }
 }
